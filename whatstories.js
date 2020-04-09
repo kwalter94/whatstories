@@ -24,7 +24,7 @@ function wpmToAnimationIntervalMillis(wpmValue) {
     return Math.floor(60000 / wpmValue);
 }
 
-function createStory(text, wordsPerMin, width, height, filename) {
+function createStory(text, wordsPerMin, width, height, backgroundColor, filename) {
     var corpus = text.split(' ').filter(val => val && val.length > 0);
     var curIndex = 0;
     var previousWord = '';
@@ -53,19 +53,21 @@ function createStory(text, wordsPerMin, width, height, filename) {
                 empty = " ".repeat(previousWord.length - currentWord.length); 
             }
         }
-        // process.stdout.write(`\r${currentWord}${empty}`)
         
-        ctx.fillStyle = '#000000';
+        process.stdout.write(`\r${currentWord}${empty}`)
+        
+        ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, width, height);
         ctx.fillStyle = '#ffffff';
         ctx.font = '50px Arial';
         // TODO: Put word in the center of the image..
-        ctx.fillText(currentWord, width/2 - 100, height/2);
+        if ("¨" != currentWord) 
+            ctx.fillText(currentWord, width/2 - 100, height/2);
         encoder.addFrame(ctx);
     }
     // 10 extra frames for a "pause"
     for(var i = 0; i < 10; i++) {
-        ctx.fillStyle = '#000000';
+        ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, width, height);
         encoder.addFrame(ctx);
     }
@@ -73,9 +75,8 @@ function createStory(text, wordsPerMin, width, height, filename) {
     encoder.finish();
 }
 
-// createStory('Hello this is a test of the the wpm to animation interval function', 300, 500, 500, 'file.gif');
-createStory("Hello there, this is a basic story created by WhatStories. You are currently reading this at 100 words per minute- learn to read faster!", 100, 500, 500, 'file-100.gif');
+createStory("Hello there, this is a basic story created by WhatStories. You are currently reading this at 100 words per minute- learn to read faster!", 100, 500, 500, '#000000', 'file-100.gif');
 
-createStory("Hello there, this is a basic story created by WhatStories. You are currently reading this at 200 words per minute- so if you're able to follow along you're okay at reading, but could be faster. ", 100, 500, 500, 'file-200.gif');
+createStory("Hello there, this is a basic story created by WhatStories. You are currently reading this at 200 words per minute- so if you're able to follow along you're okay at reading, but could be faster. ", 100, 500, 500, '#000000',  'file-200.gif');
 
-createStory("Hello there, this is a basic story created by WhatStories. You are currently reading this at 300 words per minute- so if you're able to follow along you're a pretty fast reader. ", 300, 500, 500, 'file-300.gif');
+createStory("Hello there, this is a basic story created by WhatStories. You are currently reading this at 300 words per minute- so if you're able to follow along you're a pretty fast reader. ", 300, 500, 500, '#000000', 'file-300.gif');

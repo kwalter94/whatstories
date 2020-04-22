@@ -5,12 +5,13 @@ const fs = require('fs');
 module.exports = (width, height, {backgroundColor, textColor, animationRate} = {}) => {
   const LINE_HPADDING = 0.1 * width;
   const LINE_VPADDING = 0.1 * height;
-  const CHARACTER_SIZE = Math.round(width / 16); // Pixels
+  const CHARACTER_SIZE = Math.round(width / 24); // Pixels
 
   const canvas = Canvas.createCanvas(width, height);
   backgroundColor = backgroundColor || '#013220';
   textColor = textColor || '#FFFFFF';
-  animationRate = 1000 / (animationRate || 4);
+  animationRate = animationRate || 30;
+  frameTime = 1000 / animationRate;
 
   function render(text, filename) {
     const context = getCanvasContext();
@@ -24,7 +25,7 @@ module.exports = (width, height, {backgroundColor, textColor, animationRate} = {
 
       sprites.forEach(sprite => {
         renderTextToCanvasContext(context, sprite.line, sprite.x, sprite.y);
-        sprite.y -= CHARACTER_SIZE;
+        sprite.y -= (1 / animationRate) * (height / 8);
       });
 
       encoder.addFrame(context);
@@ -82,7 +83,7 @@ module.exports = (width, height, {backgroundColor, textColor, animationRate} = {
      
     encoder.start();
     encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
-    encoder.setDelay(animationRate);  // frame delay in ms
+    encoder.setDelay(frameTime);  // frame delay in ms
     encoder.setQuality(10); // image quality. 10 is default
 
     return encoder;

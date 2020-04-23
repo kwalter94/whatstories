@@ -6,7 +6,7 @@ module.exports = (width, height, {backgroundColor, textColor, frameRate, scrollS
   const LINE_HPADDING = Math.round((0.4 * width) / 2);
   const LINE_VPADDING = Math.round((0.1 * height) / 2);
   const CHARACTER_SIZE = Math.round(width / 24); // Pixels
-  const MAX_SCROLLING_SPEED = height;
+  const MAX_SCROLLING_SPEED = height / 2;
 
   const canvas = Canvas.createCanvas(width, height);
 
@@ -14,7 +14,7 @@ module.exports = (width, height, {backgroundColor, textColor, frameRate, scrollS
   textColor = textColor || '#FFFFFF';
   frameRate = frameRate || 30;
   frameTime = Math.round(1000 / frameRate);
-  scrollSpeed = MAX_SCROLLING_SPEED - (scrollSpeed || 2);
+  scrollSpeed = ((scrollSpeed || 2) * MAX_SCROLLING_SPEED) / 10; // We are giving clients a scrolling speed in range [0, 10]
   imageQuality = imageQuality || 10;
 
   function render(text, filename) {

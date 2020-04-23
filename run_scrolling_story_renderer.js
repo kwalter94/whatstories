@@ -7,4 +7,4 @@ Each language has its purpose, however humble. Each language expresses the Yin a
 But do not program in COBOL if you can avoid it.
 `
 
-Renderer(320, 480, {frameRate: 10, imageQuality: 15, scrollSpeed: 2}).render(STORY, 'scrolling-story.gif');
+Renderer(320, 480, {frameRate: 3, imageQuality: 15, scrollSpeed: 1.5}).render(STORY, 'scrolling-story.gif');

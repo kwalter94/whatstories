@@ -29,7 +29,7 @@ module.exports = (width, height, {backgroundColor, textColor, frameRate, scrollS
 
       sprites.forEach(sprite => {
         renderTextToCanvasContext(context, sprite.line, sprite.x, sprite.y);
-        sprite.y -= Math.round((1 / frameRate) * (height / scrollSpeed));
+        sprite.y -= (1 / frameRate) * scrollSpeed;
       });
 
       encoder.addFrame(context);
